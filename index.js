@@ -16,23 +16,26 @@ function Color(input){
     this.b = 0;
     this.a = 0;
 
-    if(hexRegExp.test(input)){
-        input = input.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(m, r, g, b){
-            return r + r + g + g + b + b;
-        })
-        var match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(input);
-        this.r = parseInt(match[1], 16);
-        this.g = parseInt(match[2], 16);
-        this.b = parseInt(match[3], 16);
-        this.a = 1.0;
-    }else if(rgbaRegExp.test(input)){
-        var match = rgbaRegExp.exec(input);
-        this.r = parseInt(match[1]);
-        this.g = parseInt(match[2]);
-        this.b = parseInt(match[3]);
-        this.a = parseInt(match[4]);
-    }else{
-        throw "Invalid input string. Must be hex, rgb, or rgba";
+    if(typeof input === 'string'){
+
+        if(hexRegExp.test(input)){
+            input = input.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function(m, r, g, b){
+                return r + r + g + g + b + b;
+            })
+            var match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(input);
+            this.r = parseInt(match[1], 16);
+            this.g = parseInt(match[2], 16);
+            this.b = parseInt(match[3], 16);
+            this.a = 1.0;
+        }else if(rgbaRegExp.test(input)){
+            var match = rgbaRegExp.exec(input);
+            this.r = parseInt(match[1]);
+            this.g = parseInt(match[2]);
+            this.b = parseInt(match[3]);
+            this.a = parseInt(match[4]);
+        }else{
+            throw "Invalid input string. Must be hex, rgb, or rgba";
+        }
     }
     
     this.r = this.r > 255 ? 255 : this.r;
