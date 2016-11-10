@@ -53,6 +53,7 @@ function Color(input){
     this.b = isNaN(this.b) ? 0 : this.b;
     this.a = isNaN(this.a) ? 0 : this.a;
 
+    return this;
 }
 
 /**
@@ -60,6 +61,13 @@ function Color(input){
  */
 Color.prototype.toString = function(){
     return "rgba(" + this.r + "," + this.g + "," + this.b + "," + this.a + ")";
+}
+
+Color.prototype.invert = function(){
+    this.r = 255 - this.r;
+    this.g = 255 - this.g;
+    this.b = 255 - this.b;
+    return this;
 }
 
 module.exports = Color;
