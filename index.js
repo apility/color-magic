@@ -1,8 +1,12 @@
+/**
+ * @module color-magic
+ */
+
 "use strict";
 
 var hexRegExp = /#[0-9a-fA-F]{3,6}/i;
 var rgbaRegExp = /rgba?\((?: +)?((25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,\s*?){2}(25[0-5]|2[0-4]\d|1\d{1,2}|\d\d?)\s*,?\s*([01]\.?\d*?)?(?: +)?\)/i;
-var hslaRexExp = /(hsla?)\((?: +)?([0-9]{0,3})(?: +)?,(?: +)?([0-9]{0,3})(?: +)?\%(?: +)?,(?: +)?([0-9]{0,3})(?: +)?\%(?: +)?(?:,(?: +)?1?\.?([0-9]+)?(?: +)?)?(?: +)?\)/i;
+var hslaRegExp = /(hsla?)\((?: +)?([0-9]{0,3})(?: +)?,(?: +)?([0-9]{0,3})(?: +)?\%(?: +)?,(?: +)?([0-9]{0,3})(?: +)?\%(?: +)?(?:,(?: +)?1?\.?([0-9]+)?(?: +)?)?(?: +)?\)/i;
 
 var colors = require('./colors.json');
 
@@ -37,6 +41,7 @@ if (!Array.prototype.find) {
 
 /**
  * Creates a new instance of Color
+ * @class Color
  * @param {String} input - A CSS color string in hex, rgb, or rgba format
  */
 function Color(input){
@@ -73,8 +78,8 @@ function Color(input){
             this.g = parseInt(match[3]);
             this.b = parseInt(match[4]);
             this.a = (match[1].toLowerCase() === 'rgba' ? parseInt(match[5]) : 1);
-        }else if(hslRexExp.test(input)){
-            var match = hslRexExp.exec(input);
+        }else if(hslaRegExp.test(input)){
+            var match = hslaRegExp.exec(input);
             var h = parseInt(match[2]) / 360;
             var s = parseInt(match[3]) / 100;
             var l = parseInt(match[4]) / 100;
@@ -103,7 +108,7 @@ function Color(input){
             this.g = Math.round(g * 255);
             this.b = Math.round(b * 255);      
         }else{
-            throw "Invalid input string (\"" + input + "\"). Must be hex, rgb, or rgba";
+            throw "Invalid input string";
         }
     }
     
