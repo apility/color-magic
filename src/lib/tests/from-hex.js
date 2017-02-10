@@ -2,8 +2,8 @@ const expr = /#([\da-f]{6}|[\da-f]{3})/gim;
 
 function fromHEX(val){
     if(val.match(expr)){
-        data = [];
-        result = expr.exec(val)[1];
+        let data = [];
+        let result = expr.exec(val)[1];
         if(result.length == 3){
             data.push((parseInt('0x' + result[0])) * 17);
             data.push((parseInt('0x' + result[1])) * 17);

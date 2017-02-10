@@ -45,7 +45,22 @@ class Color {
         if(params.length == 0 && typeof val == 'number'){
             init = [val, val, val, 1];
         }else{
-            init = multiConstructor(val, params);
+            if(typeof val == 'object'){
+                if(val.hasOwnProperty('constructor')){
+                    if(val instanceof Uint8ClampedArray && val.length == 4){
+                        init = val;
+                    }else if(val.constructor === this.constructor){
+                        init[0] = val.r;
+                        init[1] = val.g;
+                        init[2] = val.b;
+                        init[3] = val.a;
+                    }else{
+                        init = multiConstructor(val, params);
+                    }
+                }
+            }else{
+                init = multiConstructor(val, params);
+            }
         }
 
         this.r = init[0];
@@ -72,36 +87,25 @@ class Color {
      * @param {Color} color
      */
     contrast(color){
-        if(!(color instanceof Color)){
+        if(!(color.constructor === this.constructor)){
             color = new Color();
         }
 
-        let lumonosity = 0;
-
-        function getLumonosity(c){
-            c = c / 255;
-            if(c <= 0.03928){
-                c = c / 12.92;
-            }else{
-                c = ((c + 0.055) / 1.055) ^ 2.4;
-            }
-            return c;
+        let Y = (r, g, b) => {
+            return (r + r + b + g + g + g + g) / 6;
         }
 
-        let r = getLumonosity(color.r);
-        let g = getLumonosity(color.g);
-        let b = getLumonosity(color.b);
+        let y = Y(color.r, color.g, color.b);
+        y = 255 - Math.round(y);
 
-        lumonosity = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-        if(lumonosity > Math.sqrt(1.05 * 0.05) - 0.05){
-            this.r = 0;
-            this.g = 0;
-            this.b = 0;
-        }else{
+        if(y > 127){
             this.r = 255;
             this.g = 255;
             this.b = 255;
+        }else{
+            this.r = 0;
+            this.g = 0;
+            this.b = 0;
         }
 
         return this;
@@ -113,7 +117,7 @@ class Color {
      * @param {Color} color
      */
     add(color){
-        if(!(color instanceof Color)){
+        if(!(color.constructor === this.constructor)){
             color = new Color();
         }
 
@@ -136,7 +140,7 @@ class Color {
      * @param {Color} color
      */
     subtract(color){
-        if(!(color instanceof Color)){
+        if(!(color.constructor === this.constructor)){
             color = new Color();
         }
 

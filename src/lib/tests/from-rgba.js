@@ -2,9 +2,9 @@ const expr = /(rgba?)\((?:\s+)?((:?[0-9]{1,3}(?:\s+)?,?(?:\s+)?){1,3}(?:\s+)?(:?
 
 function fromRGBA(val){
     if(val.match(expr)){
-        result = expr.exec(val);
-        mode = result[1];
-        data = result[2].split(',');
+        let result = expr.exec(val);
+        let mode = result[1];
+        let data = result[2].split(',');
         for(let i = 0; i < 3; i++){
             data[i] = parseInt(data[i]);
         }

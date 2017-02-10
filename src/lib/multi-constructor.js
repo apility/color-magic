@@ -9,19 +9,8 @@ let tests = [
 function multiConstructor(val, params){
     let init = [0, 0, 0, 1];
 
-    if(val instanceof Uint8ClampedArray && val.length == 4){
-        return val;
-    }
-
     switch(typeof val){
         case 'object':
-            if(val instanceof Color){
-                init[0] = val.r;
-                init[1] = val.g;
-                init[2] = val.b;
-                init[3] = val.a;
-                break;
-            }
             for(let i = 0; i < val.length; i++){
                 if(i < init.length){
                     init[i] = val[i];

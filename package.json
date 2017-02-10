@@ -2,7 +2,7 @@
   "name": "color-magic",
   "version": "3.0.0",
   "description": "A CSS color convertion and manipulation library",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
