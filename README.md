@@ -2,6 +2,8 @@
 
 A library for doing CSS color manipulation and conversion
 
+[Live demo](https://rawgit.com/apility/color-magic/master/example.html)
+
 ## Construction
 
 ```javascript
